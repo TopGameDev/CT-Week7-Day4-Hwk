@@ -20,6 +20,7 @@ function findCountries(event){
 function displayCard(data){
 
     for (let country of data){
+        console.log(country)
         
         // create variable for the place in html that my card will be made in
         let card = document.getElementById('country-card')
@@ -38,16 +39,29 @@ function displayCard(data){
         const innerDiv = document.createElement('div')
         div.append(innerDiv)
         innerDiv.classList.add('card-body')
-        innerDiv.innerHTML = `<h5 class="card-title">${country.name.official}</h5>`
+        innerDiv.innerHTML = `<h5 class="card-title text-center">${country.name.official}</h5>`
 
         const innerDiv2 = document.createElement('div')
-        div.append(innerDiv2)
-        innerDiv2.innerHTML = `<p class="card-text">${country.currencies.NGN.name}</p>`
 
-        innerDiv.innerHTML = `<p class="card-text">${country.capital['0']}</p>`
+        let currencyString = "<p class='card-text text-center'>"
+        for (let currency in country.currencies){
+            currencyString += `${country.currencies[currency].name}, `
+        }
+        currencyString = currencyString.slice(0, -2)
+        currencyString += '</p>'
+        innerDiv2.innerHTML = currencyString
         
-        innerDiv.innerHTML = `<p class="card-text">${country.languages}</p>`
+        innerDiv2.innerHTML += `<p class="card-text text-center">${country.capital['0']}</p>`
+        
+        languageString = "<p class='card-text text-center'>"
+        for (let language in country.languages){
+            languageString += `${country.languages[language]}, `
+        }
+        languageString = languageString.slice(0, -2)
+        languageString += '</p>'
+        innerDiv2.innerHTML += languageString
 
+        div.append(innerDiv2)
     }
 
 
